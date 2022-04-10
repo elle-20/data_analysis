@@ -1,0 +1,8 @@
+
+    WARNING: this matrix has 36601 x 585 (21411585 total) elements, 95.121487% of which are zero.
+    Converting it to dense CSV format may be very slow and memory intensive.
+    Moreover, other programs (e.g. Excel) may be unable to load it due to its size.
+    To cancel this command, press <control key> + C.
+
+    If you need to inspect the data, we recommend using Loupe Browser.
+    
