@@ -1,0 +1,47 @@
+---
+title: "Data Analysis - command line"
+author: "Eleonora"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# FastQC (L1)
+
+Run it from the command line by going into the folder and typing `./run_fastqc.bat`. Then select the files from the UI (can be either zip files for bulk or fastQ format for scRNA-seq) and let it run. Once it has finished save the output (file -\> save).
+
+# MultiQC (L2)
+
+Present on the docker, so you first have to run the docker.
+Go to the folder where there are the files you want to analyze (usually the dataset will be zipped and so when you extract the dataset to analyze you will obtain a folder. Otherwise create it and put all the files inside)\
+Then do a `docker run -t ewels/multiqc` to see the path of the docker folder.\
+Then `docker run -tv path/of/the/folder/of/the/data:path/of/the/docker ewels/multiqc` to actually run multiqc on the files you want. No spaces between the 2 paths, they are only separated by the semicolon : .\
+The output is saved within the folder of the data.
+
+**Creating a Docker (L3)**
+
+# Cellranger (L4)
+
+1.  First mount the folder with the data on the docker using \
+    `docker run -itv C:\Users\eleon\Desktop\data_folder_name:/home r4:v.0.01`
+
+2.  There create a .sh file with nano using `nano cellranger_mat2csv.sh`.
+
+3.  Inside this file put
+
+    `/bin/cellranger-6.1.2/cellranger mat2csv /home/data_folder_name /home/data_folder_name/filename.csv`
+
+4.  Render it executable: `chmod +x ./cellranger_mat2csv.sh`
+
+5.  Run it in background: `nohup ./cellranger_mat2csv.sh &`
+
+You can also run it from outside the docker but you have to add to the beginning of the file.sh
+
+`#!/bin/bash` (don't do it because it does not work well and create a file with a strange extension)
+
+# Docker commands
+
+`docker cp path\of\the\file_to_copy lastdockerimage:/home/` to copy a file in a docker
